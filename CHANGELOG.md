@@ -2,6 +2,14 @@
 
 Versioning: bundle `MAJOR.MINOR.PATCH`. MAJOR = a MUST/MUST NOT rule added, removed or changed (owner approval required). MINOR = new guidance, templates or tools. PATCH = wording and fixes.
 
+## 3.0.0 (2026-09-23)
+
+- Owner-directed change: remove the mandatory VPS backup archive, Google Drive upload, retention and restore schedule. Ulaş manages backups through Hostinger outside this repository; product audit history, reversible deletion and safe production-change decisions remain.
+- Make this repository the top-level team policy. Other playbooks define narrower agent workflows; project `AGENTS.md` records local facts, adopted version and applicable profiles. Agents flag conflicts instead of silently replacing the approved policy.
+- Add CI for policy links/version consistency and both installers. After CI passes on `main`, CD publishes a versioned GitHub Release with a clean ZIP of tracked policy files. No workflow connects to the VPS.
+
+Historical entries below describe the policy as it existed at that version; the v3.0.0 rules supersede them.
+
 ## 2.0.0 (2026-09-23)
 
 - Owner-approved engineering defaults permit a responsible human developer to make task-specific exceptions without a separate reviewer or technical approval gate; agents flag material risks once and report skipped checks honestly.

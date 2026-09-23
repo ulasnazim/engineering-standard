@@ -29,7 +29,7 @@ The owner permits private code and customer data with any AI provider. Never put
 [Allowed dependency directions and module boundaries actually present in the code.]
 
 ## Deployment
-[Target (owner's VPS / not deployed yet), deployment command or automation, health endpoint, backup/rollback method and how this app receives credentials. Any team member may deploy within existing authority; an agent may act on a named team member's instruction. TODO(owner) where unknown.]
+[Target (owner's VPS / not deployed yet), deployment command or automation, health endpoint, rollback path, persistent data locations and how this app receives credentials. Ulaş separately manages Hostinger backups. Any team member may deploy within existing authority; an agent may act on a named team member's instruction. TODO(owner) where unknown.]
 
 ## Data-change history and recovery (if the product stores valuable records)
 [How deletion is reversed, where create/update/delete and bulk-change audit events are kept, agent/sponsoring-human attribution, retention, bulk-delete alerts and verified recovery. Write "Not applicable" for products without valuable persistent records.]

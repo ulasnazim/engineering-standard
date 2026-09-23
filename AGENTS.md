@@ -1,10 +1,10 @@
 # Policy Repository Instructions
 
-Adopted: engineering-standard 2.0.0 on 2026-09-23. Owner: Ulaş Nazım.
+Adopted: engineering-standard 3.0.0 on 2026-09-23. Owner: Ulaş Nazım.
 
 ## Purpose
 
-This repository holds the engineering policies, model guidance, onboarding templates and optional installer scripts for Ulaş's software projects. It does not contain an application or the live VPS configuration. `main` represents the owner-approved standard after publication.
+This repository holds the top-level engineering policies, model guidance, onboarding templates and optional installer scripts for Ulaş's software projects. It does not contain an application or the live VPS configuration. `main` and its matching release represent the owner-approved standard after publication. Other agent playbooks are subordinate for governance; project `AGENTS.md` records applicable facts and the adopted version.
 
 ## Governing files
 
@@ -21,12 +21,14 @@ Read `UNIVERSAL_SOFTWARE_ENGINEERING_STANDARD.md`, `TEAM_DEVELOPMENT_OPERATING_P
 - Model and provider guidance: `MODELS.md`; policy versions: `VERSION` and `CHANGELOG.md`.
 - Shell syntax: `bash -n install/install.sh`.
 - Safe shell installer preview: `ENG_STANDARD_HOME="$(pwd)" bash install/install.sh --all --dry-run` (never use a real installation to verify a documentation-only change).
+- Policy integrity: `python3 scripts/check_policy.py`.
+- Linux installer smoke test: `bash scripts/test_install_sh.sh` (uses a disposable home and a local Git remote).
 - Whitespace check: `git diff --check`.
-- PowerShell syntax and behavior should be checked on a Windows machine before calling that installer verified; PowerShell was not available in the environment used to prepare v1.0.0.
+- GitHub Actions checks the PowerShell installer syntax and dry-run on a Windows runner.
 
 ## Deployment
 
-Publishing this public repository does not install instructions on developer machines or back up the VPS. Avoid including a prior `.git` directory in distributed ZIP files. Policy changes go through a PR before the owner-approved `main` is updated; each team member chooses whether to install its tool configuration.
+Publishing this public repository does not install instructions on developer machines or run jobs on the VPS. The owner uses Hostinger for VPS backups outside this repository. GitHub Actions publishes a versioned ZIP after checks pass on approved `main`; it excludes `.git`. Policy changes go through a PR before `main` is updated; each team member chooses when to install its tool configuration.
 
 ## Definition of Done
 

@@ -12,9 +12,10 @@ $ErrorActionPreference = 'Stop'
 
 $RepoUrl     = if ($env:ENG_STANDARD_REPO) { $env:ENG_STANDARD_REPO } else { 'git@github.com:ulasnazim/engineering-standard.git' }
 $Dest        = if ($env:ENG_STANDARD_HOME) { $env:ENG_STANDARD_HOME } else { Join-Path $HOME '.engineering-standard' }
-$CodexDir    = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME '.codex' }
-$ClaudeDir   = Join-Path $HOME '.claude'
-$OpenCodeDir = Join-Path $HOME '.config\opencode'
+$ToolRoot    = if ($env:ENG_STANDARD_TOOL_HOME) { $env:ENG_STANDARD_TOOL_HOME } else { $HOME }
+$CodexDir    = if ($env:ENG_STANDARD_TOOL_HOME) { Join-Path $ToolRoot '.codex' } elseif ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $ToolRoot '.codex' }
+$ClaudeDir   = Join-Path $ToolRoot '.claude'
+$OpenCodeDir = Join-Path $ToolRoot '.config\opencode'
 
 $BeginMark = '<!-- BEGIN engineering-standard (managed by install.sh; edits inside are overwritten) -->'
 $EndMark   = '<!-- END engineering-standard -->'
