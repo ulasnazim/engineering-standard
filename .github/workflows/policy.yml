@@ -1,0 +1,72 @@
+name: Policy CI and release
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  policy-linux:
+    name: policy-linux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+      - name: Check policy files and links
+        run: python3 scripts/check_policy.py
+      - name: Check shell syntax and installer behavior
+        run: |
+          bash -n install/install.sh scripts/test_install_sh.sh
+          bash scripts/test_install_sh.sh
+      - name: Check changed-file whitespace
+        run: git diff --check HEAD^
+
+  policy-windows:
+    name: policy-windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check PowerShell syntax and installer behavior
+        shell: pwsh
+        run: |
+          $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'install/install.ps1'), [ref]$null, [ref]$errors) | Out-Null
+          if ($errors) { throw ($errors | Out-String) }
+          & ./scripts/test_install_ps1.ps1
+
+  release:
+    name: release
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [policy-linux, policy-windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Publish the approved policy bundle
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          version="$(tr -d '[:space:]' < VERSION)"
+          tag="v${version}"
+          if gh release view "$tag" --json targetCommitish --jq .targetCommitish > target.txt 2>/dev/null; then
+            if [ "$(cat target.txt)" != "$GITHUB_SHA" ]; then
+              echo "${tag} already belongs to another commit; bump VERSION before publishing." >&2
+              exit 1
+            fi
+            echo "${tag} is already published at this commit."
+            exit 0
+          fi
+          if git ls-remote --exit-code --tags origin "refs/tags/${tag}" >/dev/null 2>&1; then
+            echo "${tag} exists without a release; resolve the tag rather than moving it." >&2
+            exit 1
+          fi
+          mkdir -p dist
+          git archive --format=zip --output="dist/engineering-standard-${tag}.zip" HEAD
+          gh release create "$tag" "dist/engineering-standard-${tag}.zip" \
+            --target "$GITHUB_SHA" --title "Engineering standard ${tag}" --generate-notes

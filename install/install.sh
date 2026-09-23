@@ -11,14 +11,20 @@
 # Environment overrides:
 #   ENG_STANDARD_REPO   git URL of the policy repository
 #   ENG_STANDARD_HOME   local clone path (default: ~/.engineering-standard)
+#   ENG_STANDARD_TOOL_HOME  config root for supported tools (default: user home)
 #   CODEX_HOME          Codex home (default: ~/.codex)
 set -euo pipefail
 
 REPO_URL="${ENG_STANDARD_REPO:-git@github.com:ulasnazim/engineering-standard.git}"
 DEST="${ENG_STANDARD_HOME:-$HOME/.engineering-standard}"
-CODEX_DIR="${CODEX_HOME:-$HOME/.codex}"
-CLAUDE_DIR="$HOME/.claude"
-OPENCODE_DIR="$HOME/.config/opencode"
+TOOL_ROOT="${ENG_STANDARD_TOOL_HOME:-$HOME}"
+if [ -n "${ENG_STANDARD_TOOL_HOME:-}" ]; then
+  CODEX_DIR="$TOOL_ROOT/.codex"
+else
+  CODEX_DIR="${CODEX_HOME:-$TOOL_ROOT/.codex}"
+fi
+CLAUDE_DIR="$TOOL_ROOT/.claude"
+OPENCODE_DIR="$TOOL_ROOT/.config/opencode"
 
 BEGIN_MARK="<!-- BEGIN engineering-standard (managed by install.sh; edits inside are overwritten) -->"
 END_MARK="<!-- END engineering-standard -->"

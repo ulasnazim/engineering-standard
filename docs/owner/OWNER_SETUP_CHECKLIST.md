@@ -3,12 +3,12 @@
 For the project owner. Agents do not need to read this file.
 
 ## Once
-- [ ] Ulaş retains ownership and recovery access to his `ulasnazim` GitHub account, repositories, Cloudflare account, VPS account and Google Drive backup folder. Enforce MFA for team accounts and document how to revoke access after a departure.
+- [ ] Ulaş retains ownership and recovery access to his `ulasnazim` GitHub account, repositories, Cloudflare account and Hostinger VPS account. Enforce MFA for team accounts and document how to revoke access after a departure.
 - [x] Publish this repository as `ulasnazim/engineering-standard` (public by Ulaş's decision). Use helpful branch checks without imposing a mandatory second human reviewer. Policy changes still require Ulaş's approval.
 - [ ] Approve the initial policies and `MODELS.md`; fill in the per-person and per-issue spending budgets before paid automations run.
 - [ ] Developer/contractor agreements: IP assignment including AI-assisted output, confidentiality, AI-tool and open-source clauses. Check the KKTC default rules on who owns software written by employees and contractors; rely on an express assignment either way.
 - [ ] Cloudflare domain registration and DNS in Ulaş's account, with MFA and recoverable owner access.
-- [ ] VPS inventory (CPU, RAM, disk, services including OpenClaw, open ports). Implement [the backup brief](VPS_BACKUP_AUTOMATION.md): automate **one encrypted file per backup run in Ulaş's Google Drive**, dated retention, key recovery, integrity/quota monitoring and an isolated restore where practical. Document what must be rebuilt.
+- [ ] VPS inventory (CPU, RAM, disk, services including OpenClaw, open ports). Ulaş selects and manages Hostinger backups outside this repository; note the app data paths/volumes for his coverage decisions. This standard does not prescribe an extra backup system or recurring restore drill.
 - [ ] Every developer runs the installer: `bash install/install.sh` (macOS/Linux) or `.\install\install.ps1` (Windows).
 
 ## Per new project (no editing required)
@@ -18,6 +18,6 @@ For the project owner. Agents do not need to read this file.
 4. Where the product stores valuable business records, implement [automatic audit and recovery](../DATA_CHANGE_RECOVERY.md) as part of that product. The policy repository alone does not turn on database logging.
 
 ## Recurring
-- Monthly: AI spend per accepted issue; check automated backup and isolated restore results; access review.
+- Monthly: AI spend per accepted issue and access review. Hostinger backup settings remain Ulaş's separate account decision.
 - Quarterly: `MODELS.md`; policy review.
 - After each policy release: developers re-run the installer.

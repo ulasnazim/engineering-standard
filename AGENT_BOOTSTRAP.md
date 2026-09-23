@@ -1,8 +1,9 @@
 # Agent Bootstrap: Universal Engineering Policy
 
-**Bundle version:** see `VERSION` in the policy repository (2.0.0 = Universal Software Engineering Standard 2.0 + Team Development Operating Policy 2.0).
+**Bundle version:** see `VERSION` in the policy repository (3.0.0 = Universal Software Engineering Standard 3.0 + Team Development Operating Policy 3.0).
 **Applies to:** every repository, every AI coding tool, every model, for all work done for this team.
 **Policy files:** the local clone named in the installer line above this file (default `~/.engineering-standard/`). If you cannot read the local clone, use Ulaş's `ulasnazim/engineering-standard` GitHub repository if you have access, otherwise the "Portable core" in the repository's `AGENTS.md`.
+**Authority:** the owner-approved `main` of `ulasnazim/engineering-standard` is the top-level policy. Other playbooks supply implementation workflows; a project's `AGENTS.md` supplies local facts. Flag conflicts and reconcile them in a PR. Ulaş's explicit directions and authorized human exceptions take precedence.
 
 - `UNIVERSAL_SOFTWARE_ENGINEERING_STANDARD.md`: engineering rules, profiles (§18), Definition of Done (§17). About 8,000 tokens.
 - `TEAM_DEVELOPMENT_OPERATING_POLICY.md`: ownership, GitHub workflow, AI cost and data rules, hosting.

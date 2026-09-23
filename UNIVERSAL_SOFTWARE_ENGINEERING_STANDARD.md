@@ -1,6 +1,6 @@
 # Universal Software Engineering Standard
 
-**Version:** 2.0
+**Version:** 3.0
 **Updated:** 2026-09-23  
 **Audience:** Human developers, AI coding agents, coding assistants, reviewers and deployment tools  
 **Scope:** All software projects, regardless of language, framework, platform or provider
@@ -21,6 +21,8 @@ Its goals are to produce software that is:
 
 This standard is not permission to redesign or refactor an entire project. Apply it incrementally and preserve working behaviour.
 
+The owner-approved `main` of `ulasnazim/engineering-standard` is the team-wide policy source. Other playbooks provide narrower workflows; project `AGENTS.md` records project facts and selected profiles. If an older project instruction conflicts with the current team policy, flag it and propose a small reconciliation rather than silently following two contradictory rules.
+
 ## Requirement levels
 
 - **MUST** and **MUST NOT** describe the default instructions for agents and tools. A responsible human developer may choose a task-specific engineering exception within their existing authority.
@@ -33,8 +35,8 @@ When rules conflict, use this priority:
 
 1. Safety, security and data integrity.
 2. Explicit user requirements and acceptance criteria.
-3. Existing project-specific instructions.
-4. This universal standard.
+3. This standard and the Team Development Operating Policy for team-wide rules.
+4. Existing project-specific instructions for local facts and applicable constraints.
 5. Tool or framework conventions.
 
 Material changes to security and data-integrity defaults should be visible in the release record; they do not need a separate technical-lead sign-off when the human task owner already has authority.
@@ -251,11 +253,10 @@ Security MUST be designed into development rather than added only before release
 - Schema changes MUST use versioned migrations.
 - Applied migrations MUST NOT be edited silently; use a new corrective migration.
 - Production migrations MUST be reviewed for locking, duration, compatibility and rollback or forward-recovery strategy.
-- Backups MUST exist before destructive or high-risk migrations.
-- Backups are not considered reliable until restoration is tested.
+- Before an irreversible production data change, identify the affected records, likely loss and available recovery path, then obtain the authorization appropriate to that action. Ulaş manages VPS backups through Hostinger; this policy does not prescribe another backup job or a recurring restore schedule.
 - Deletion, archival and retention behaviour MUST be explicit.
 - For valuable business records, default to reversible deletion where retention allows it. Automatically record material creations, edits and deletions with time, affected record IDs/count, actor and human sponsor for an agent action, and a request or job identifier. Capture enough history to investigate and recover a mistake without placing passwords or unnecessary personal data in logs. An application event log should be complemented by database-level coverage for relevant direct SQL, bulk operations and schema changes where feasible.
-- Keep audit history difficult for ordinary app/deployment roles to alter, retain or export a protected copy off the VPS, and alert on unusual bulk deletion. Test a deletion and recovery path. Audit history reveals what happened; backups or retained versions recover the values. If the project's recovery objective needs a point between snapshots, evaluate database point-in-time recovery.
+- Keep audit history difficult for ordinary app/deployment roles to alter, and alert on unusual bulk deletion. Test a deletion and the application's own reversal path where one exists. Audit history reveals what happened; retained versions or the owner's chosen recovery service may help recover lost values. Do not claim an untested recovery path works.
 - Time MUST be stored with an unambiguous timezone strategy, normally UTC internally.
 - Units, currencies and precision MUST be explicit.
 - Identifiers MUST remain stable and must not expose avoidable internal information.
@@ -415,7 +416,7 @@ Every maintained project MUST document:
 - How to test, build and deploy it.
 - Repository structure and important module boundaries.
 - Data stores and external integrations.
-- Backup, restore and rollback procedures where relevant.
+- Rollback or forward-recovery procedures for significant changes; identify owner-managed recovery services where relevant.
 - Common failure modes and troubleshooting steps.
 
 Additional rules:
@@ -558,7 +559,7 @@ Adds:
 - Schema ownership and documented invariants.
 - Migration rehearsal and recovery plan.
 - Transaction and concurrency testing.
-- Backup and restore verification.
+- Document the data-loss implications and owner-selected recovery approach for risky migrations.
 - Change/deletion audit and recovery checks for valuable records.
 - Query plans and performance checks for critical paths.
 
