@@ -1,6 +1,6 @@
 # AGENTS.md: [repository name]
 
-Adopted: engineering-standard [bundle version, e.g. 1.0.0] on [YYYY-MM-DD] by [tool/model], reviewed in PR #[n].
+Adopted: engineering-standard [bundle version, e.g. 2.0.0] on [YYYY-MM-DD] by [tool/model], reviewed in PR #[n] if applicable.
 Governing documents: Universal Software Engineering Standard + Team Development Operating Policy, from `ulasnazim/engineering-standard` (local clone: `~/.engineering-standard/`). This file records **project facts only**. Agents maintain it; humans review changes by PR.
 
 ## Product
@@ -29,21 +29,25 @@ The owner permits private code and customer data with any AI provider. Never put
 [Allowed dependency directions and module boundaries actually present in the code.]
 
 ## Deployment
-[Target (owner's VPS / not deployed yet), deployment command or automation, health endpoint, backup/rollback method. Any team member may deploy after applicable DoD checks; an agent may act on a named team member's instruction. TODO(owner) where unknown.]
+[Target (owner's VPS / not deployed yet), deployment command or automation, health endpoint, backup/rollback method and how this app receives credentials. Any team member may deploy within existing authority; an agent may act on a named team member's instruction. TODO(owner) where unknown.]
+
+## Data-change history and recovery (if the product stores valuable records)
+[How deletion is reversed, where create/update/delete and bulk-change audit events are kept, agent/sponsoring-human attribution, retention, bulk-delete alerts and verified recovery. Write "Not applicable" for products without valuable persistent records.]
 
 ## Project-specific rules
 [Only rules genuinely specific to this repository, or "None".]
 
-## Approved exceptions
-| Rule | Reason | Owner | Scope | Expiry |
-|---|---|---|---|---|
+## Material human decisions and exceptions (if any)
+| Default | Decision and likely consequence | Human | Scope |
+|---|---|---|---|
 
 ## Portable core (for agents without the global policy installed; do not edit)
 - Never commit, log or send credentials, authentication secrets or `.env` secrets to AI providers; private code and customer data may go to any AI provider for the task.
-- Branch per GitHub issue; avoid force-push to shared branches. Any team member may deploy after the applicable DoD; an agent may execute a named member's scoped deployment. Log the revision and verification.
+- Prefer branch and issue for meaningful work; avoid force-push to shared branches. Any team member may deploy within existing authority, including with a disclosed engineering exception. An agent may execute a named member's scoped deployment. Log the revision and checks run or skipped.
 - Small focused changes; Conventional Commits; validate input; authorise server-side; parameterised queries.
 - Tests for behaviour changes and regressions; run lint, type-check, tests and build before the PR.
 - New backward-compatible migrations only; never edit an applied migration.
+- Valuable records: reversible deletion when appropriate, automatic change/deletion audit with actor and sponsoring human for agent actions, unusual bulk-delete alert and tested recovery. Obsidian can contain summaries but is not the audit source.
 - Readable code; comments explain why; no dead code or debug output; justify new dependencies; no copyleft without owner approval.
 - Same step fails twice → stop and report. Do not invent commands or results.
-- Destructive data changes, permission escalation and paid purchases need explicit human authorization. Not done until the Definition of Done passes; the PR reports what changed, was verified (commands), was not verified, risks, deployment status and decisions needed.
+- A human developer may choose engineering exceptions without a new approval gate. Flag material risk once, follow the authorized decision, and record a short reason/consequence. Destructive production data changes, permission escalation and paid purchases still need a decision by someone empowered to make it. Owner account/access/budget authority persists. Report what changed, what was checked or skipped, and deployment status honestly.
