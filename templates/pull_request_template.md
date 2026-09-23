@@ -15,14 +15,10 @@ Closes #
 
 ## Decisions needed from a human
 
-## Definition of Done (Standard §17): tick what applies, explain anything unticked
-- [ ] Acceptance criteria met
-- [ ] Tests added/updated; lint, type-check, tests, build pass
-- [ ] No secrets or sensitive data in code, fixtures, logs or prompts
-- [ ] Input validation and authorisation reviewed
-- [ ] New dependencies justified; licences acceptable
-- [ ] Migrations backward-compatible; recovery understood (if any)
-- [ ] UI: sizes, keyboard, labels, contrast, loading/empty/error states; screenshots attached (if UI changed)
-- [ ] Docs updated (README / AGENTS.md / RUNBOOK / ADR)
+## Quick self-review (only what applies)
+<!-- Could this affect permissions/tenant isolation, customer records, bulk deletion, migrations or recovery? Did you check the relevant path? No second reviewer or lengthy checklist is required. -->
+
+## Human engineering exception, if material
+<!-- One sentence: chosen deviation, who chose it and likely consequence. Routine choices need no entry. Agents should not repeat objections or claim skipped checks passed. -->
 
 AI tools and models used:

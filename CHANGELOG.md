@@ -2,7 +2,15 @@
 
 Versioning: bundle `MAJOR.MINOR.PATCH`. MAJOR = a MUST/MUST NOT rule added, removed or changed (owner approval required). MINOR = new guidance, templates or tools. PATCH = wording and fixes.
 
-## 1.0.0 (2026-09-23, initial release candidate)
+## 2.0.0 (2026-09-23)
+
+- Owner-approved engineering defaults permit a responsible human developer to make task-specific exceptions without a separate reviewer or technical approval gate; agents flag material risks once and report skipped checks honestly.
+- OpenClaw Settings → Secrets is documented as a convenient credential entry path. Protected and agent-readable entries are both allowed by informed human choice; the shared store's unencrypted-at-rest limitation and backup implications are explicit.
+- Added an implementation brief for automated, dated, encrypted single-file VPS backups to Ulaş's Google Drive, automatic failure/integrity checks and isolated restore verification. Publication of this policy does not implement the job on the VPS.
+- Added data-change recovery guidance for reversible deletion, automatic audit history (including agent/human attribution), bulk-delete alerts, offsite audit retention and tested recovery. Obsidian is optional for summaries, not the authoritative audit store.
+- Made the PR template a short relevant self-review prompt and refreshed agent instructions and owner setup guidance.
+
+## 1.0.0 (2026-09-23, initial release)
 
 - Universal Software Engineering Standard 1.0 included as the general quality baseline.
 - Team Development Operating Policy 1.0 records the owner's decisions: GitHub repositories and service accounts controlled by Ulaş Nazım; any human team member may deploy completed work; private code and customer data may be sent to any AI provider; one dated encrypted file per VPS backup run is retained in Ulaş's Google Drive.

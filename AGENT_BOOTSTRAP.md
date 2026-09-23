@@ -1,6 +1,6 @@
 # Agent Bootstrap: Universal Engineering Policy
 
-**Bundle version:** see `VERSION` in the policy repository (1.0.0 = Universal Software Engineering Standard 1.0 + Team Development Operating Policy 1.0).
+**Bundle version:** see `VERSION` in the policy repository (2.0.0 = Universal Software Engineering Standard 2.0 + Team Development Operating Policy 2.0).
 **Applies to:** every repository, every AI coding tool, every model, for all work done for this team.
 **Policy files:** the local clone named in the installer line above this file (default `~/.engineering-standard/`). If you cannot read the local clone, use Ulaş's `ulasnazim/engineering-standard` GitHub repository if you have access, otherwise the "Portable core" in the repository's `AGENTS.md`.
 
@@ -25,14 +25,17 @@
 5. Write a gap report `docs/adr/0001-engineering-standard-adoption.md`: the rules the repository does not yet meet, ranked by risk, each with a proposed issue title. Do not fix the gaps in the same change.
 6. Branch `chore/adopt-engineering-standard`, commit `docs(repo): adopt engineering standard <version>`, open a PR. Do not merge it.
 
-## 3. Hard rules (MUST, every repository)
+## 3. Agent defaults and human discretion
 
-- Never commit, print, log or send authentication secrets, `.env` secrets or credentials to an AI provider. **Private code and customer data may be sent to any AI provider** for team work as directed by the owner (Policy §6). Minimize irrelevant material to save tokens; observe applicable customer agreements and legal duties.
-- Work on a short-lived branch linked to a GitHub issue. Do not force-push shared branches or silently change policy. **Every human team member may deploy** a change that satisfies the applicable Definition of Done; an agent may execute that deployment on its named team member's instruction using scoped access and an auditable release process. Destructive data changes, increased permissions or paid purchases still need explicit human authorization. Do not merge or change account settings without task authorization.
+Follow these engineering defaults. A responsible human developer may choose a task-specific exception within their existing authority without a new approval gate. Explain a material risk once, then implement the decision and briefly note its consequence; do not repeat objections. Owner account, access and spending authority and legal/customer obligations remain in force. Never claim a skipped check passed.
+
+- Never commit, print, log or send authentication secrets, `.env` secrets or credentials to an AI provider. **Private code and customer data may be sent to any AI provider** for team work as directed by the owner (Policy §6). The human may enter secrets through OpenClaw's web UI; when agent-readable values are needed, the human chooses a scoped credential after hearing the consequence once. Minimize irrelevant material to save tokens.
+- Prefer a short-lived branch linked to a GitHub issue for meaningful changes. Do not force-push shared branches or silently change policy. **Every human team member may deploy** within their existing authority, including with a disclosed engineering exception; an agent may execute a named team member's deployment using scoped access and an auditable release record. Destructive production data changes, increased permissions or paid purchases still need authorization from someone with that authority. Do not merge or change account settings without task authorization.
 - Small, focused, reversible changes. Conventional Commits. No unrelated edits.
 - Validate untrusted input at boundaries; authorise on the server; use parameterised queries; do not weaken tests, validation or security controls to get a green result.
 - A behaviour change needs tests; a bug fix needs a regression test where practical. Run lint, type-check, tests and build, using deterministic tools rather than model judgement.
 - Schema changes only through new, backward-compatible migrations. Never edit an applied migration.
+- For valuable production records, default to reversible deletion and automatic change/audit history including agent actions, plus tested recovery and alerts for unusual bulk deletion (Standard §7; Policy §7). Do not use Obsidian as the authoritative audit log.
 - Human-readable code: intention-revealing names, small focused functions, comments that explain *why*. No narrating comments, dead code, debug output or commented-out attempts.
 - New dependency: state why in the PR. Copyleft licences (GPL/AGPL/LGPL/SSPL) need owner approval.
 - Do not invent APIs, commands, files, test results or completed steps.
@@ -44,7 +47,7 @@
 | Planning a feature, unclear requirements | Standard §1, §4; Policy §5 |
 | Git, branches, commits, PRs | Standard §2; Policy §5 |
 | Tests | Standard §5 |
-| Auth, permissions, secrets, input handling | Standard §6; Policy §6 |
+| Auth, permissions, secrets, input handling | Standard §6; Policy §6–7 |
 | Data, database, migrations | Standard §7, §18.4 |
 | APIs, integrations, webhooks | Standard §8 |
 | User interface | Standard §9, §10 |
@@ -67,8 +70,8 @@
 
 ## 6. Completion
 
-Do not claim completion unless every applicable Definition of Done item (Standard §17) is satisfied. Report in the PR template: what changed · what was verified (commands and result lines) · what was not verified · risks · deployment status · decisions needed. List any unchecked applicable item explicitly. Planned or partial work is never "done".
+Report in the PR or release note what changed, what was checked and what was skipped. For production record changes, include affected IDs/count and an audit or job reference where available. A human may ship with an accepted engineering exception; describe it as shipped with that exception rather than fully verified. Never claim a test passed if it was not run or treat generated code as proven working.
 
 ## 7. Precedence
 
-Safety, security and data integrity → the user's explicit requirements for this task → the repository's `AGENTS.md` → Team Development Operating Policy → Universal Standard → tool conventions. A repository file may add rules or record approved exceptions (with reason, owner, scope). It may never silently weaken security or data-integrity rules. If documents conflict, stop and ask.
+Existing owner account/access/budget authority and legal/customer obligations → the authorized human's explicit task decision → repository `AGENTS.md` → Team Development Operating Policy → Universal Standard → tool conventions. The human may override engineering defaults without an approval loop. Note material security/data consequences briefly; ask once only when actual authority or the instruction is unclear. Never misreport checks or put credentials into AI prompts.

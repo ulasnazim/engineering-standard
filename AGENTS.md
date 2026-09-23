@@ -1,6 +1,6 @@
 # Policy Repository Instructions
 
-Adopted: engineering-standard 1.0.0 on 2026-09-23. Owner: Ulaş Nazım.
+Adopted: engineering-standard 2.0.0 on 2026-09-23. Owner: Ulaş Nazım.
 
 ## Purpose
 
@@ -26,8 +26,8 @@ Read `UNIVERSAL_SOFTWARE_ENGINEERING_STANDARD.md`, `TEAM_DEVELOPMENT_OPERATING_P
 
 ## Deployment
 
-Publishing this repository does not install instructions on developer machines or back up the VPS. Avoid including a prior `.git` directory in distributed ZIP files. Once Ulaş's private GitHub repository exists, publish the clean source tree, inspect the default branch, then let each team member choose whether to install its tool configuration.
+Publishing this public repository does not install instructions on developer machines or back up the VPS. Avoid including a prior `.git` directory in distributed ZIP files. Policy changes go through a PR before the owner-approved `main` is updated; each team member chooses whether to install its tool configuration.
 
 ## Definition of Done
 
-All applicable items in the Universal Standard §17 must be met or explicitly reported as incomplete. For a policy-only change, check cross-file consistency, validate modified scripts, review the diff and report the repository/publication status accurately.
+Report applicable Universal Standard §17 items and any human-accepted exception truthfully. For a policy-only change, check cross-file consistency, validate modified scripts, review the diff and report the repository/publication status accurately.

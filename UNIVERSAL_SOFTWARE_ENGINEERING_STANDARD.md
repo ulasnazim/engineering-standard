@@ -1,6 +1,6 @@
 # Universal Software Engineering Standard
 
-**Version:** 1.0  
+**Version:** 2.0
 **Updated:** 2026-09-23  
 **Audience:** Human developers, AI coding agents, coding assistants, reviewers and deployment tools  
 **Scope:** All software projects, regardless of language, framework, platform or provider
@@ -23,9 +23,11 @@ This standard is not permission to redesign or refactor an entire project. Apply
 
 ## Requirement levels
 
-- **MUST** and **MUST NOT** are compulsory.
-- **SHOULD** and **SHOULD NOT** apply unless a documented reason justifies an exception.
+- **MUST** and **MUST NOT** describe the default instructions for agents and tools. A responsible human developer may choose a task-specific engineering exception within their existing authority.
+- **SHOULD** and **SHOULD NOT** are recommendations that humans may adapt to the project.
 - **MAY** is optional.
+
+For a material exception affecting security, customer records, availability or cost, the human developer leaves a short note with the decision, likely consequence and affected scope in the issue, PR or release record. Routine choices need no exception paperwork or additional approver. Agents flag a material concern once, suggest a practical alternative, then follow the authorized human's decision without an approval loop. No exception grants account ownership, additional access or spending authority, or waives legal or customer obligations. An agent must never claim a skipped check passed.
 
 When rules conflict, use this priority:
 
@@ -35,7 +37,7 @@ When rules conflict, use this priority:
 4. This universal standard.
 5. Tool or framework conventions.
 
-No project-specific instruction may silently weaken security or data-integrity rules. Any exception MUST be recorded with its reason, owner and scope.
+Material changes to security and data-integrity defaults should be visible in the release record; they do not need a separate technical-lead sign-off when the human task owner already has authority.
 
 ## How every tool and agent must use this standard
 
@@ -49,11 +51,11 @@ Before making changes, every contributor MUST:
 6. Identify security, data, compatibility and deployment risks.
 7. Plan a small, reversible change.
 
-An agent MUST NOT claim completion merely because code was generated. Completion requires the evidence defined in **Definition of Done**.
+An agent MUST NOT claim completion merely because code was generated. Report the **Definition of Done** evidence and human-accepted exceptions accurately.
 
-## Core non-negotiable rules
+## Core engineering defaults
 
-Every project MUST follow these rules:
+Apply these defaults to every project unless a responsible human chooses an exception as described above:
 
 1. Understand before changing.
 2. Preserve existing user work and working behaviour.
@@ -201,7 +203,7 @@ Testing MUST be proportional to risk, not performed only to increase coverage nu
 
 ### 5.3 Automated quality gates
 
-Where supported, protected branches MUST require relevant checks before merge:
+Use relevant automated checks where supported. Projects may enforce them in branch settings, but a responsible human may consciously ship with an unmet engineering check and record what remains unverified. Suggested checks:
 
 - Formatting or linting.
 - Type checking or compilation.
@@ -226,6 +228,7 @@ Security MUST be designed into development rather than added only before release
 - Rate-limit sensitive or abuse-prone operations.
 - Do not log passwords, secret tokens, private keys or complete sensitive payloads.
 - Store secrets using the platform's secret-management mechanism, never source control.
+- A trusted, authenticated web form that writes directly to a server-side secret store is an acceptable way for a human to provide a credential. Where an agent must read or use a credential, choose that access deliberately and prefer scoped credentials; do not impose a paid vault or an SSH-only entry process.
 - Use maintained cryptographic libraries; do not invent cryptographic protocols.
 - Dependencies MUST be reviewed, minimized and monitored for vulnerabilities.
 - Security controls MUST NOT be disabled merely to make a test pass.
@@ -251,6 +254,8 @@ Security MUST be designed into development rather than added only before release
 - Backups MUST exist before destructive or high-risk migrations.
 - Backups are not considered reliable until restoration is tested.
 - Deletion, archival and retention behaviour MUST be explicit.
+- For valuable business records, default to reversible deletion where retention allows it. Automatically record material creations, edits and deletions with time, affected record IDs/count, actor and human sponsor for an agent action, and a request or job identifier. Capture enough history to investigate and recover a mistake without placing passwords or unnecessary personal data in logs. An application event log should be complemented by database-level coverage for relevant direct SQL, bulk operations and schema changes where feasible.
+- Keep audit history difficult for ordinary app/deployment roles to alter, retain or export a protected copy off the VPS, and alert on unusual bulk deletion. Test a deletion and recovery path. Audit history reveals what happened; backups or retained versions recover the values. If the project's recovery objective needs a point between snapshots, evaluate database point-in-time recovery.
 - Time MUST be stored with an unambiguous timezone strategy, normally UTC internally.
 - Units, currencies and precision MUST be explicit.
 - Identifiers MUST remain stable and must not expose avoidable internal information.
@@ -361,6 +366,7 @@ User-facing web applications SHOULD target **WCAG 2.2 Level AA** unless a strict
 - Applications MUST expose meaningful health or readiness checks where operationally relevant.
 - Logs SHOULD be structured, timestamped and include correlation identifiers.
 - Logs MUST provide diagnostic value without exposing secrets or unnecessary sensitive data.
+- For systems holding valuable records, distinguish operational logs from an automatically recorded change/audit history. A note in Obsidian may summarize an incident but is not the authoritative audit trail.
 - Important systems SHOULD produce suitable metrics, logs and traces.
 - Monitor user-visible failures, latency, traffic and resource saturation.
 - Alerts MUST be actionable and tied to a documented response.
@@ -437,13 +443,14 @@ These rules apply to every AI agent and coding tool.
 
 - One agent or process MUST own a task at a time unless work is explicitly divided.
 - Agents MUST NOT duplicate work or enter approval loops with other agents.
+- Recommend applicable defaults and flag material risks once. Follow a responsible human's engineering exception within their existing authority, note material consequences briefly, and never silently reverse the decision or falsify evidence.
 - Use the least costly model and tool capable of completing the task reliably.
 - Token, time and paid-service use SHOULD be bounded.
 - Prefer targeted inspection over repeatedly loading entire repositories or histories.
 - Do not invent APIs, commands, tests, files or successful results.
 - Do not weaken tests, validation or security controls simply to produce a green result.
 - Do not make unrelated improvements without authorization.
-- Do not expose credentials or sensitive data in prompts, logs, commits or reports.
+- Do not expose authentication credentials in prompts, logs, commits or reports. The owner permits private code and customer data with any AI provider for team work; avoid irrelevant material and honor applicable customer and legal duties.
 - Destructive operations, production data changes, payments, external communications and expanded permissions require explicit authorization unless already clearly granted for the task.
 
 ### 16.3 Completion reporting
@@ -457,12 +464,13 @@ Agent reports MUST separate:
 - Deployment status.
 - Commit, branch or pull-request references when available.
 - Decisions still requiring human input.
+- If production records were created, changed or deleted: affected entity/record IDs and counts (where permitted), the audit-event or job reference, and anything that could not be verified. A policy instruction is not a substitute for automatic server/database audit events.
 
 An agent MUST NOT describe planned, attempted or partially completed work as complete.
 
 ## 17. Definition of Done
 
-A change is complete only when all applicable items are satisfied:
+A change fully meets this standard when all applicable items are satisfied. A responsible human may release with a disclosed exception within their authority; report skipped checks and call the release "shipped with an exception" rather than "fully verified":
 
 ### Requirements
 
@@ -490,6 +498,7 @@ A change is complete only when all applicable items are satisfied:
 - [ ] No secrets or sensitive data were added to code, fixtures or logs.
 - [ ] Dependencies and security findings were reviewed.
 - [ ] Database migrations and recovery implications were reviewed.
+- [ ] For valuable records, change/deletion history and recovery were checked when the change affects them.
 
 ### UI and accessibility
 
@@ -504,7 +513,7 @@ A change is complete only when all applicable items are satisfied:
 - [ ] The deployed revision is identifiable.
 - [ ] Rollback or forward recovery is understood.
 
-Any unchecked applicable item MUST be reported. It MUST NOT be hidden behind a general statement that the task is complete.
+Report any unchecked applicable item honestly, including when a human elected to ship with that exception. Do not describe work or tests as verified when they were not.
 
 ## 18. Project profiles
 
@@ -550,6 +559,7 @@ Adds:
 - Migration rehearsal and recovery plan.
 - Transaction and concurrency testing.
 - Backup and restore verification.
+- Change/deletion audit and recovery checks for valuable records.
 - Query plans and performance checks for critical paths.
 
 ### 18.5 Realtime, IoT, telemetry or vehicle-tracking profile
@@ -607,7 +617,7 @@ Every repository SHOULD contain a short `AGENTS.md` or equivalent file similar t
 ```markdown
 # Project Instructions
 
-This repository adopts Universal Software Engineering Standard version 1.0.
+This repository adopts Universal Software Engineering Standard version 2.0.
 
 ## Active profiles
 - Web application
@@ -634,8 +644,8 @@ This repository adopts Universal Software Engineering Standard version 1.0.
 ## Project-specific MUST rules
 [Only rules genuinely specific to this repository]
 
-## Approved exceptions
-[Rule, reason, owner and scope]
+## Material human decisions and exceptions
+[Default, decision maker, affected scope and likely consequence, if material]
 ```
 
 The detailed standard MUST live in version control. A chat message or an agent's memory is not the authoritative copy.
@@ -643,7 +653,7 @@ The detailed standard MUST live in version control. A chat message or an agent's
 ## 20. Standard governance
 
 - This standard MUST be versioned and maintain a changelog.
-- Changes to `MUST` or `MUST NOT` rules require human approval.
+- Changes to the published policy's `MUST` or `MUST NOT` rules require Ulaş's approval through the policy repository's PR process. This differs from a human developer's task-specific engineering exception.
 - Agents MAY propose changes through an issue or pull request with evidence, expected benefit and compatibility impact.
 - Agents MUST NOT silently change mandatory policy.
 - Rules SHOULD remain technology-neutral unless placed in a project profile.
